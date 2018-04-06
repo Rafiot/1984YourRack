@@ -1,8 +1,8 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python3
 
 import picamera
 try:
-    from cStringIO import StringIO
+    from io import StringIO
 except:
     from io import StringIO
 from PIL import Image
@@ -45,10 +45,10 @@ def test_darkness(camera):
     im_black_white = im.convert('1')
     px = list(im_black_white.getdata())
     if not is_night:
-        print px.count(0)
+        print(px.count(0))
         return px.count(0) > threshold_brightness_day
     else:
-        print px.count(255)
+        print(px.count(255))
         return px.count(255) < threshold_brightness_night
 
 
@@ -60,7 +60,7 @@ def test_motion(camera):
         old_motion_hist = new_motion_hist
         return False
     diff_squares = [(old_motion_hist[i] - new_motion_hist[i]) ** 2
-                    for i in xrange(len(old_motion_hist))]
+                    for i in range(len(old_motion_hist))]
     rms = numpy.sqrt(sum(diff_squares) / len(old_motion_hist))
     old_motion_hist = new_motion_hist
     if is_night:
@@ -103,7 +103,7 @@ def record(camera):
         print('start recording')
         count = pictures_count
         for i, f in enumerate(camera.capture_continuous('{timestamp}_{counter}.jpg')):
-            print(i, f)
+            print((i, f))
             count -= 1
             if count == 0:
                 if not test_motion(camera):
