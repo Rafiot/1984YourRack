@@ -8,7 +8,7 @@ machineArch=$(uname -m)
 
 if [ "$machineArch" == "armv7l" ]; then
 	echo "armv7l detected"
-	sudo apt install -y libopenjp2-7-dev libtiff5-dev
+	sudo apt install -y libopenjp2-7-dev libtiff5-dev libatlas-base-dev
 fi
 
 if [ "$check_pip3" != "0" ]; then
