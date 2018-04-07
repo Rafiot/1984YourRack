@@ -7,9 +7,9 @@ if sys.version_info[0] < 3:
 
 import picamera
 try:
-    from io import StringIO
+    from io import BytesIO
 except:
-    from io import StringIO
+    from io import BytesIO
 from PIL import Image
 import time
 import numpy
@@ -32,7 +32,7 @@ is_night = False
 
 
 def capture_motion_image(camera):
-    image_data = StringIO()
+    image_data = BytesIO()
     camera.capture(image_data, 'jpeg', use_video_port=True,
                    resize=(motion_width, motion_height))
     image_data.seek(0)
@@ -42,7 +42,7 @@ def capture_motion_image(camera):
 
 
 def test_darkness(camera):
-    image_data = StringIO()
+    image_data = BytesIO()
     camera.capture(image_data, 'jpeg', use_video_port=True,
                    resize=(motion_width, motion_height))
     image_data.seek(0)
