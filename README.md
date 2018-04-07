@@ -1,5 +1,13 @@
 Keep an eye on your rack when you are not around.
 
+# Python3 only
+
+Python 2, thank you for your years of faithful service.
+
+Python 3, your time is now.
+
+[Python 2.7 will retire in…](https://pythonclock.org/)
+
 # Installation
 
 Please run ./src/install_deps.sh
