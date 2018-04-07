@@ -4,9 +4,9 @@ Keep an eye on your rack when you are not around.
 
 Please run ./src/install_deps.sh
 
-# Blockers
+# Issues
 
-On rpi armv6 pillow has issues:
+On rpi armv6l pillow had issues:
 
 ```
 (myPiMotion) pi@camepi:~/code/1984YourRack $ ./src/myPiMotion.py
@@ -18,4 +18,8 @@ Traceback (most recent call last):
 ImportError: libopenjp2.so.7: cannot open shared object file: No such file or directory
 ```
 
-libopenjp2.so.7 is usually provided by libopenjp2-7-dev but is not in the current sources.
+libopenjp2.so.7 is usually provided by libopenjp2-7-dev and pillow needs other dependencies install, install_deps.sh does this for you.
+
+```
+sudo apt install -y libopenjp2-7-dev libtiff5-dev libatlas-base-dev
+```
