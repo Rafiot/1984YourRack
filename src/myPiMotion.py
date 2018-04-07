@@ -1,10 +1,15 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python
+
+import sys
+if sys.version_info[0] < 3:
+    print("Must be using Python 3")
+    sys.exit(-1)
 
 import picamera
 try:
-    from cStringIO import StringIO
+    from io import BytesIO
 except:
-    from io import StringIO
+    from io import BytesIO
 from PIL import Image
 import time
 import numpy
@@ -18,8 +23,8 @@ height = 972
 motion_width = 96
 motion_height = 72
 old_motion_hist = None
-sensivity_day = 15
-sensivity_night = 50
+sensitivity_day = 15
+sensitivity_night = 50
 pictures_count = 2
 threshold_brightness_day = motion_width * motion_height * 0.75
 threshold_brightness_night = motion_width * motion_height * 0.75
@@ -27,7 +32,7 @@ is_night = False
 
 
 def capture_motion_image(camera):
-    image_data = StringIO()
+    image_data = BytesIO()
     camera.capture(image_data, 'jpeg', use_video_port=True,
                    resize=(motion_width, motion_height))
     image_data.seek(0)
@@ -37,7 +42,7 @@ def capture_motion_image(camera):
 
 
 def test_darkness(camera):
-    image_data = StringIO()
+    image_data = BytesIO()
     camera.capture(image_data, 'jpeg', use_video_port=True,
                    resize=(motion_width, motion_height))
     image_data.seek(0)
@@ -45,10 +50,10 @@ def test_darkness(camera):
     im_black_white = im.convert('1')
     px = list(im_black_white.getdata())
     if not is_night:
-        print px.count(0)
+        print(px.count(0))
         return px.count(0) > threshold_brightness_day
     else:
-        print px.count(255)
+        print(px.count(255))
         return px.count(255) < threshold_brightness_night
 
 
@@ -60,14 +65,14 @@ def test_motion(camera):
         old_motion_hist = new_motion_hist
         return False
     diff_squares = [(old_motion_hist[i] - new_motion_hist[i]) ** 2
-                    for i in xrange(len(old_motion_hist))]
+                    for i in range(len(old_motion_hist))]
     rms = numpy.sqrt(sum(diff_squares) / len(old_motion_hist))
     old_motion_hist = new_motion_hist
     if is_night:
-        sensivity = sensivity_night
+        sensitivity = sensitivity_night
     else:
-        sensivity = sensivity_day
-    if rms > sensivity:
+        sensitivity = sensitivity_day
+    if rms > sensitivity:
         print(rms)
         night_switch(camera)
         return True
@@ -103,7 +108,7 @@ def record(camera):
         print('start recording')
         count = pictures_count
         for i, f in enumerate(camera.capture_continuous('{timestamp}_{counter}.jpg')):
-            print(i, f)
+            print((i, f))
             count -= 1
             if count == 0:
                 if not test_motion(camera):
