@@ -6,10 +6,8 @@ which pip3 > /dev/null ; check_pip3=$?
 rpiFW=$(/opt/vc/bin/vcgencmd version |grep version |cut -f2 -d\ )
 machineArch=$(uname -m)
 
-if [ "$machineArch" == "armv7l" ]; then
-	echo "armv7l detected"
-	sudo apt install -y libopenjp2-7-dev libtiff5-dev libatlas-base-dev
-fi
+echo "Installing pillow dependencies"
+sudo apt install -y libopenjp2-7-dev libtiff5-dev libatlas-base-dev
 
 if [ "$check_pip3" != "0" ]; then
     sudo apt install -y python3-pip tmux

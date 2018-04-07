@@ -1,4 +1,9 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
+
+import sys
+if sys.version_info[0] < 3:
+    print("Must be using Python 3")
+    sys.exit(-1)
 
 import picamera
 try:
