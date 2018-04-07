@@ -23,8 +23,8 @@ height = 972
 motion_width = 96
 motion_height = 72
 old_motion_hist = None
-sensivity_day = 15
-sensivity_night = 50
+sensitivity_day = 15
+sensitivity_night = 50
 pictures_count = 2
 threshold_brightness_day = motion_width * motion_height * 0.75
 threshold_brightness_night = motion_width * motion_height * 0.75
@@ -69,10 +69,10 @@ def test_motion(camera):
     rms = numpy.sqrt(sum(diff_squares) / len(old_motion_hist))
     old_motion_hist = new_motion_hist
     if is_night:
-        sensivity = sensivity_night
+        sensitivity = sensitivity_night
     else:
-        sensivity = sensivity_day
-    if rms > sensivity:
+        sensitivity = sensitivity_day
+    if rms > sensitivity:
         print(rms)
         night_switch(camera)
         return True
